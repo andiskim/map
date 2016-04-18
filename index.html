@@ -3,34 +3,45 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="styles.css" />
 
-    <title>TITLE</title>
+    <!-- Google Maps API -->
+
+
+    <title>Travel Destinations</title>
   </head>
 
   <body>
     <div class="container">
       <!-- Top Part -->
-      <div class="row">
+      <div class="row top">
         <!-- Left Section Search-->
-        <div class="col3">
-
-
+        <div class="col-md-3 search">
+            <div>
+              <input type="text" name="name" placeholder="Search Location">
+            </div>
         </div>
         <!-- Right Section Title-->
-        <div class="col6">
+        <div class="col-md-9 title">
+            <h1>Travel Destinations</h1>
 
 
         </div>
       </div>
 
       <!-- Bottom Part -->
-      <div class="row">
-        <div class="col3">
+      <div class="row bottom">
+        <div class="col-md-3 view">
+          View List
+          <ul id="list">
+            <!-- ** Javascript data goes here ** -->
+          </ul>
 
         </div>
-        <div class="col6">
-
-
+        <div class="col-md-9 map">
+          <!-- Google Maps -->
+          <div id="map" style="width:100%;height:100%;"></div>
         </div>
       </div>
 
@@ -41,6 +52,11 @@
 
 
     </div>
+
+    <script src="model.js"></script>
+    <script src="app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArUU4jJKUG9CgaRdIhn2RAagmHYzaySyk&callback=initMap"></script>
+
   </body>
 
 </html>
