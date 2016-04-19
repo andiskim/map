@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="styles.css" />
 
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script> -->
     <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
 
     <title>Travel Destinations</title>
@@ -18,7 +19,7 @@
         <!-- Left Section Search-->
         <div class="col-md-3 search">
             <div>
-              <input id="pac-input" ype="text" name="name" placeholder="Search Location">
+              <input class="form-control" data-bind="value: Query, valueUpdate: 'keyup'" autocomplete="off">
             </div>
         </div>
         <!-- Right Section Title-->
@@ -32,12 +33,15 @@
       <!-- Bottom Part -->
       <div class="row bottom">
         <div class="col-md-3 view">
-          Location List
-          <ul id="list">
             <!-- ** Javascript data goes here ** -->
-            <ul data-bind="foreach: locationsList">
+            <h3>Location List:</h3>
+            <ul data-bind="foreach: searchResults">
               <li><a data-bind="text: cityCountry, attr: {href: 'javascript:google.maps.event.trigger(gmarkers[' + $index() + '],' + '\'click\'' + ');'}"></a></li>
             </ul>
+
+            <!-- <ul data-bind="foreach: locationsList">
+              <li><a data-bind="text: cityCountry, attr: {href: 'javascript:google.maps.event.trigger(gmarkers[' + $index() + '],' + '\'click\'' + ');'}"></a></li>
+            </ul> -->
             <!-- <p data-bind="text: cityCountry"></p> -->
           </ul>
 

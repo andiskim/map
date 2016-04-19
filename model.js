@@ -33,6 +33,7 @@ var model = {
   ]
 };
 
+// object constructor for knockoutjs
 function Location(data) {
   this.city = ko.observable(data.city);
   this.country = ko.observable(data.country);
@@ -44,6 +45,7 @@ function Location(data) {
 };
 
 
+//knockoutjs ViewModel to utilize model data and object constructor function
 function ViewModel() {
   var self = this;
 
@@ -52,9 +54,16 @@ function ViewModel() {
   for (var i = 0; i < model.locations.length; i++) {
     self.locationsList.push(new Location(model.locations[i]));
   }
-  
+
   this.currentLocation = ko.observable(this.locationsList()[0]);
 
+  this.Query = ko.observable('');
+  this.searchResults = ko.computed(function() {
+    var q = self.Query();
+    return ko.utils.arrayFilter(self.locationsList(), function(i) {
+      return i.cityCountry().toLowerCase().indexOf(q) >= 0;
+    });
+  });
 };
 
 ko.applyBindings(new ViewModel());
