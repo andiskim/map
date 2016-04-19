@@ -6,8 +6,7 @@
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="styles.css" />
 
-    <!-- Google Maps API -->
-
+    <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
 
     <title>Travel Destinations</title>
   </head>
@@ -33,9 +32,13 @@
       <!-- Bottom Part -->
       <div class="row bottom">
         <div class="col-md-3 view">
-          View List
+          Location List
           <ul id="list">
             <!-- ** Javascript data goes here ** -->
+            <ul data-bind="foreach: locationsList">
+              <li><a data-bind="text: cityCountry, attr: {href: 'javascript:google.maps.event.trigger(gmarkers[' + $index() + '],' + '\'click\'' + ');'}"></a></li>
+            </ul>
+            <!-- <p data-bind="text: cityCountry"></p> -->
           </ul>
 
         </div>

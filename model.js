@@ -32,3 +32,29 @@ var model = {
     }
   ]
 };
+
+function Location(data) {
+  this.city = ko.observable(data.city);
+  this.country = ko.observable(data.country);
+  this.lat = ko.observable(data.lat);
+  this.long = ko.observable(data.long);
+  this.cityCountry = ko.computed(function() {
+    return this.city() + ", " + this.country()
+  }, this);
+};
+
+
+function ViewModel() {
+  var self = this;
+
+  this.locationsList = ko.observableArray([]);
+
+  for (var i = 0; i < model.locations.length; i++) {
+    self.locationsList.push(new Location(model.locations[i]));
+  }
+  
+  this.currentLocation = ko.observable(this.locationsList()[0]);
+
+};
+
+ko.applyBindings(new ViewModel());

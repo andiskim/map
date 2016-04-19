@@ -1,10 +1,11 @@
-// GOOGLE MAPS!
+var gmarkers = [];
 
+// GOOGLE MAPS!
 function initMap() {
   var myLatLng = {lat: model.locations[0].lat, lng: model.locations[0].long};
 
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 1,
+    zoom: 2,
     center: myLatLng
   });
 
@@ -24,39 +25,40 @@ function initMap() {
        return function() {
          // ADD CONTENT OF THE INFORMATION WINDOW
          var http = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ model.locations[i].city + ", " + model.locations[i].country + "&format=json";
-         // PARSE JSON
-         $.ajax({
-          type: "GET",
-          url: http,
-          contentType: "application/json; charset=utf-8",
-          async: false,
-          dataType: "jsonp",
-          success: function (data, textStatus, jqXHR) {
-              console.log(data);
-          },
-          error: function (errorMessage) {
-        }
-    });
+         var wikiContent = "";
+         // PARSE JSON AND ADD DATA
+           $.ajax({
+              type: "GET",
+              url: http,
+              contentType: "application/json; charset=utf-8",
+              async: false,
+              dataType: "jsonp",
+              success: function (data, textStatus, jqXHR) {
+                for(var j=0; j < data[1].length; j++) {
+                  wikiContent += "<li>" + (j+1).toString()+": "+ "<a href='" + data[3][j]+ "'>" + data[1][j] + "</a></li>";
+                }
+                // open window after loading data
+                infowindow.setContent("<h4>Wikipedia Results for "+ model.locations[i].city+", "+ model.locations[i].country +"</h4>" + wikiContent);
+                infowindow.open(map, marker);
+              },
+              error: function (errorMessage) {
+              },
+              async: false
+          });
 
-         infowindow.setContent("<h4>Wikipedia Results</h4>" +
-         http
-       );
-         infowindow.open(map, marker);
          //ANIMATE MAP MARKERS WHEN CLICKED
          // use closure to have a separate variable for animation
          (function(markerClosure) {
-           if (markerClosure.getAnimation() == null) {
-             markerClosure.setAnimation(google.maps.Animation.BOUNCE);
-           } else {
-             markerClosure.setAnimation(null);
-           }
+            // bounce animation
+            markerClosure.setAnimation(google.maps.Animation.BOUNCE);
+            // stop bounce after 1400ms
+            setTimeout(function(){ markerClosure.setAnimation(null); }, 1400);
          })(marker);
        }
      })(marker, i));
-   }
 
-   function toggleBounce() {
-
+     //add link to marker
+     gmarkers.push(marker);
    }
 }
 
@@ -64,10 +66,10 @@ function initMap() {
 
 // VIEW!
 // tag to id of list
-var list = document.getElementById("list");
-for (var i=0;i<model.locations.length;i++) {
-  // create li under the ul
-  var newli = document.createElement("li");
-  // append a new li to the ul
-  list.appendChild(newli).innerHTML = model.locations[i].city + ", " + model.locations[i].country;
-}
+// for (var i=0;i<model.locations.length;i++) {
+//   // create li under the ul and link to Google Maps
+//   var cityAndCountry = model.locations[i].city + ", " + model.locations[i].country;
+//   var link = '<a href="javascript:google.maps.event.trigger(gmarkers[' + i.toString() + '],'+ "'click'" + ');">' + cityAndCountry + '</a>';
+//   $("#locationItem").append(link);
+//   // console.log(link);
+// }
