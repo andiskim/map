@@ -34,9 +34,9 @@
       <div class="row bottom">
         <div class="col-md-3 view">
             <!-- ** Javascript data goes here ** -->
-            <h3>Location List:</h3>
+            <h3>Search results:</h3>
             <ul data-bind="foreach: searchResults">
-              <li><a data-bind="text: cityCountry, attr: {href: 'javascript:google.maps.event.trigger(gmarkers[' + $index() + '],' + '\'click\'' + ');'}"></a></li>
+              <li><a data-bind="text: cityCountry, attr: {href: 'javascript:google.maps.event.trigger(gmarkers[' + number + '],' + '\'click\'' + ');'}"></a></li>
             </ul>
 
             <!-- <ul data-bind="foreach: locationsList">

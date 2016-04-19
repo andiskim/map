@@ -1,3 +1,4 @@
+// data
 var model = {
   locations: [
     {
@@ -34,11 +35,12 @@ var model = {
 };
 
 // object constructor for knockoutjs
-function Location(data) {
+function Location(data,i) {
   this.city = ko.observable(data.city);
   this.country = ko.observable(data.country);
   this.lat = ko.observable(data.lat);
   this.long = ko.observable(data.long);
+  this.number = i;
   this.cityCountry = ko.computed(function() {
     return this.city() + ", " + this.country()
   }, this);
@@ -49,15 +51,21 @@ function Location(data) {
 function ViewModel() {
   var self = this;
 
+  //create new observable Array
   this.locationsList = ko.observableArray([]);
 
+  // loop through and populate observable Array
   for (var i = 0; i < model.locations.length; i++) {
-    self.locationsList.push(new Location(model.locations[i]));
+    self.locationsList.push(new Location(model.locations[i], i));
   }
 
-  this.currentLocation = ko.observable(this.locationsList()[0]);
+  // set current location
+  // this.currentLocation = ko.observable(this.locationsList()[0]);
 
+  // create observable to store input data for filtering
   this.Query = ko.observable('');
+
+  // use the query in the view to filter
   this.searchResults = ko.computed(function() {
     var q = self.Query();
     return ko.utils.arrayFilter(self.locationsList(), function(i) {

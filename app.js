@@ -16,6 +16,7 @@ function initMap() {
   var marker, i;
 
   for (i = 0; i < model.locations.length; i++) {
+    // add marker but only show the ones that are shown on the list
      marker = new google.maps.Marker({
        position: new google.maps.LatLng(model.locations[i].lat, model.locations[i].long),
        map: map
