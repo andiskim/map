@@ -19,7 +19,7 @@
         <!-- Left Section Search-->
         <div class="col-md-3 search">
             <div>
-              <input class="form-control" data-bind="value: Query, valueUpdate: 'keyup'" autocomplete="off">
+              <input class="form-control" placeholder="Search" data-bind="value: Query, valueUpdate: 'keyup'" autocomplete="off">
             </div>
         </div>
         <!-- Right Section Title-->
@@ -34,7 +34,7 @@
       <div class="row bottom">
         <div class="col-md-3 view">
             <!-- ** Javascript data goes here ** -->
-            <h3>Search results:</h3>
+            <h3>Locations:</h3>
             <ul data-bind="foreach: searchResults">
               <li><a data-bind="text: cityCountry, attr: {href: 'javascript:google.maps.event.trigger(gmarkers[' + number + '],' + '\'click\'' + ');'}"></a></li>
             </ul>

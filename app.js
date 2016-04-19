@@ -42,7 +42,8 @@ function initMap() {
                 infowindow.setContent("<h4>Wikipedia Results for "+ model.locations[i].city+", "+ model.locations[i].country +"</h4>" + wikiContent);
                 infowindow.open(map, marker);
               },
-              error: function (errorMessage) {
+              fail: function (errorMessage) {
+                console.log("failed");
               },
               async: false
           });
