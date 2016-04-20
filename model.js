@@ -69,11 +69,6 @@ function Location($data,i) {
   });
 
   // GOOGLE MAPS LISTENER
-  // google.maps.event.addListener(marker, 'drag', function() {
-  //   var pos = marker.getPosition();
-  //   this.lat(pos.lat());
-  //   this.long(pos.lng());
-  // }.bind(this));
   google.maps.event.addListener(marker, 'click', (function(marker) {
     return function() {
       // ADD CONTENT OF THE INFORMATION WINDOW
@@ -95,7 +90,7 @@ function Location($data,i) {
              infowindow.open(map, marker);
            },
            fail: function (errorMessage) {
-             console.log("failed");
+             alert("Wikipedia API failed");
            }
        });
 

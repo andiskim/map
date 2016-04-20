@@ -8,52 +8,50 @@
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyArUU4jJKUG9CgaRdIhn2RAagmHYzaySyk" onerror="errorHandling()"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script> -->
     <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
 
     <title>Travel Destinations</title>
   </head>
 
   <body>
-    <div class="container">
-      <!-- Top Part -->
-      <div class="row top">
-        <!-- Left Section Search-->
-        <div class="col-md-3 search">
-            <div>
-              <input class="form-control" placeholder="Search" data-bind="value: Query, valueUpdate: 'keyup'" autocomplete="off">
-            </div>
-        </div>
-        <!-- Right Section Title-->
-        <div class="col-md-9 title">
-            <h1>Travel Destinations</h1>
-
-
-        </div>
+    <nav id="drawer" class="leftMenu">
+      <div>
+        <input class="form-control" placeholder="Search" data-bind="value: Query, valueUpdate: 'keyup'" autocomplete="off">
       </div>
+      <h3>Locations:</h3>
+      <ul data-bind="foreach: searchResults">
+        <li><a data-bind="text: cityCountry, attr: {href: 'javascript:google.maps.event.trigger(gmarkers[' + number + '],' + '\'click\'' + ');'}"></a></li>
+      </ul>
+    </nav>
 
-      <!-- Bottom Part -->
-      <div class="row bottom">
-        <div class="col-md-3 view">
-            <!-- ** Javascript data goes here ** -->
-            <h3>Locations:</h3>
-            <ul data-bind="foreach: searchResults">
-              <li><a data-bind="text: cityCountry, attr: {href: 'javascript:google.maps.event.trigger(gmarkers[' + number + '],' + '\'click\'' + ');'}"></a></li>
-            </ul>
+    <main class="rightMap">
+      <a id="menu">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+        </svg>
+      </a>
 
-            <!-- <ul data-bind="foreach: locationsList">
-              <li><a data-bind="text: cityCountry, attr: {href: 'javascript:google.maps.event.trigger(gmarkers[' + $index() + '],' + '\'click\'' + ');'}"></a></li>
-            </ul> -->
-            <!-- <p data-bind="text: cityCountry"></p>
-          </ul> -->
+      <h1>Travel Destinations</h1>
+      <div id="map"></div>
+    </main>
 
-        </div>
-        <div class="col-md-9 map">
-          <!-- Google Maps -->
-          <div id="map" style="width:100%;height:100%;"></div>
-        </div>
-      </div>
-    </div>
+    <script>
+      /*
+       * Open the drawer when the menu ison is clicked.
+       */
+      var menu = document.querySelector('#menu');
+      var main = document.querySelector('main');
+      var drawer = document.querySelector('#drawer');
+
+      menu.addEventListener('click', function(e) {
+        drawer.classList.toggle('open');
+        e.stopPropagation();
+      });
+      main.addEventListener('click', function() {
+        drawer.classList.remove('open');
+      });
+
+    </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="model.js"></script>
