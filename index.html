@@ -1,3 +1,5 @@
+<!-- <!doctype html> -->
+
 <html>
   <head>
     <meta charset="utf-8" />
@@ -5,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="styles.css" />
-
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyArUU4jJKUG9CgaRdIhn2RAagmHYzaySyk" onerror="errorHandling()"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script> -->
     <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
 
@@ -42,8 +44,8 @@
             <!-- <ul data-bind="foreach: locationsList">
               <li><a data-bind="text: cityCountry, attr: {href: 'javascript:google.maps.event.trigger(gmarkers[' + $index() + '],' + '\'click\'' + ');'}"></a></li>
             </ul> -->
-            <!-- <p data-bind="text: cityCountry"></p> -->
-          </ul>
+            <!-- <p data-bind="text: cityCountry"></p>
+          </ul> -->
 
         </div>
         <div class="col-md-9 map">
@@ -55,8 +57,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="model.js"></script>
-    <script src="app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyArUU4jJKUG9CgaRdIhn2RAagmHYzaySyk&callback=initMap"></script>
+    <!-- <script src="app.js"></script> -->
+
 
   </body>
 
