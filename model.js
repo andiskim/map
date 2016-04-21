@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 // data
 var model = {
   locations: [
@@ -103,7 +103,7 @@ function Location($data,i) {
           // stop bounce after 1400ms
           setTimeout(function(){ markerClosure.setAnimation(null); }, 1400);
        })(marker);
-     }
+     };
    })(marker));
 
    //add to gmarkers
