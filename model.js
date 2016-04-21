@@ -35,17 +35,8 @@ var model = {
   ]
 };
 
-// INITIALIZE GOOGLE MAP
-var gmarkers = [];
 
-var myLatLng = {lat: model.locations[0].lat, lng: model.locations[0].long};
 
-var map = new google.maps.Map(document.getElementById('map'), {
-  zoom: 2,
-  center: myLatLng
-});
-
-var infowindow = new google.maps.InfoWindow();
 
 // OBJECT CONSTRUCTOR FOR LOCATION
 function Location($data,i) {
@@ -72,8 +63,15 @@ function Location($data,i) {
   google.maps.event.addListener(marker, 'click', (function(marker) {
     return function() {
       // ADD CONTENT OF THE INFORMATION WINDOW
-      var http = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ $data.city + ", " + $data.country + "&format=json";
+      var http = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+
+      $data.city + ", " + $data.country + "&format=json";
       var wikiContent = "";
+
+      self.apiTimeout = setTimeout(function() {
+              alert('ERROR: Failed to load data');
+            }, 5000);
+
+    self.apiTimeout;
       // PARSE JSON AND ADD DATA
         $.ajax({
            type: "GET",
@@ -81,17 +79,20 @@ function Location($data,i) {
            contentType: "application/json; charset=utf-8",
            async: true,
            dataType: "jsonp",
-           success: function (data, textStatus, jqXHR) {
-             for(var j=0; j < data[1].length; j++) {
-               wikiContent += "<li>" + (j+1).toString()+": "+ "<a href='" + data[3][j]+ "'>" + data[1][j] + "</a></li>";
-             }
-             // open window after loading data
-             infowindow.setContent("<h4>Wikipedia Results for "+ $data.city+", "+ $data.country +"</h4>" + wikiContent);
-             infowindow.open(map, marker);
-           },
-           fail: function (errorMessage) {
-             alert("Wikipedia API failed");
-           }
+
+       }).done(function (data, textStatus, jqXHR) {
+         for(var j=0; j < data[1].length; j++) {
+           wikiContent += "<li>" + (j+1).toString()+": "+ "<a href='" +
+           data[3][j]+ "'" + " target=" + '"_blank"'+ ">" + data[1][j] + "</a></li>";
+         }
+         // open window after loading data
+         infowindow.setContent("<h4>Wikipedia Results for "+ $data.city+", "+
+         $data.country +"</h4>" + wikiContent);
+         infowindow.open(map, marker);
+
+         clearTimeout(self.apiTimeout);
+       }).fail(function() {
+         alert("Wikipedia API Failed");
        });
 
        //ANIMATE MAP MARKERS WHEN CLICKED
@@ -142,7 +143,7 @@ function ViewModel() {
 
   // use the query in the view to filter
   this.searchResults = ko.computed(function() {
-    var q = self.Query();
+    var q = self.Query().toLowerCase();
     return ko.utils.arrayFilter(self.locationsList(), function(item) {
       var match = item.cityCountry().toLowerCase().indexOf(q) >= 0;
 
@@ -153,4 +154,22 @@ function ViewModel() {
   });
 }
 
-ko.applyBindings(new ViewModel());
+// INITIALIZE GOOGLE MAP
+var gmarkers = [];
+
+var myLatLng = {lat: model.locations[0].lat, lng: model.locations[0].long};
+var map, infowindow;
+
+
+function initMap() {
+
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 3,
+    center: myLatLng
+  });
+
+  infowindow = new google.maps.InfoWindow();
+
+  ko.applyBindings(new ViewModel());
+}
